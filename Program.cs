@@ -41,7 +41,8 @@ namespace Bio_6
                   switch (w[0])
                   {
                       case '[':
-                          string a=w.Substring(1,w.Length-1);                          
+                          string a=w.Substring(1,w.Length-2);
+                          
                           zNawiasu(a, i);
                           break;
                       case 'V': dowolnaLitera(i);
@@ -52,15 +53,19 @@ namespace Bio_6
                           string b = w.Substring(1, w.Length - 1); 
                           bezTych(b, i);
                           break;
-                      default: 
-                          if(w.Length==1)
-                          litera(w, i);
+                      default:
+                          if (w.Length == 1)
+                          {
+                              litera(w, i);
+                              break;
+                          }
                           else
                           {
-                              KRazy(w,i);
+                              KRazy(w, i);
+                              break;
                           }
 
-                          break;
+                          
                   }
               }
 
@@ -139,14 +144,18 @@ namespace Bio_6
           }
 
 
+
+
           private static void KRazy(string w, int i)
           {
-              if(w.Length==4)
+              if(!w.Contains(','))
               {
                   int k;
-                 
-                  int.TryParse(w[2].ToString(), out k);
 
+                  string a = w.Substring(2, w.Length - 3);
+
+                  int.TryParse(a, out k);
+                  
                   List<int> pozycja = new List<int>();
 
                   

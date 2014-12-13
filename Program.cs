@@ -131,7 +131,7 @@ namespace Bio_6
                               {
                                  bool ok = false;
                                   foreach (int wyn in wyniki[k + 2])
-                                      if (wyn > pozycja)
+                                      if (wyn > pozycja+1) 
                                       {
                                           pozycja = wyn;
                                           ok = true;

@@ -87,7 +87,7 @@ namespace Bio_6
               int poczatek;
               int koniec;
               bool w=true;
-             
+              bool wypisane = false;
                   for(int j=0; j<wyniki[0].Count; j++)
                   {
                       w = true;
@@ -182,10 +182,13 @@ namespace Bio_6
                           Console.WriteLine(w);
                           Console.WriteLine(poczatek);
                           Console.WriteLine(koniec);
+                          wypisane=true;
                       }
                       
                       
                   }
+
+                  if (wypisane == false) Console.WriteLine("Nie odnaleziono");
 
                   
               

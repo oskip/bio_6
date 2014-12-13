@@ -93,37 +93,85 @@ namespace Bio_6
                       w = true;
                       int pozycja = wyniki[0].ElementAt(j);
                       poczatek = pozycja;
+                      int k = 0;
                       if (pozycja == -3)
                       {
                           pozycja = wyniki[0].ElementAt(j + 1) + wyniki[0].ElementAt(j + 2)-1;
                           j=j+2;
                           poczatek = wyniki[0].ElementAt(j);
                       }
-                      int k = 0;
+
+                      
+
+                      if (pozycja == -1) {
+                          pozycja = 0;
+                          poczatek = pozycja;
+                          if (k + 1 < ilosc)
+                          {
+                              foreach (int wyn in wyniki[k + 1])
+                                  if (wyn > pozycja)
+                                  {
+                                      pozycja = wyn - 1;
+                                      break;
+                                  }
+
+                          }
+                          else
+                              pozycja = sekwencja.Length;
+                          }
                       
                       while (k+1 < ilosc)
                       {
-                          pozycja++;
-                          if (wyniki[k + 1].Contains(-3) && wyniki[k + 1].Contains(pozycja))
+
+
+
+                          if (wyniki[k + 1].Contains(-1))
                           {
-                             
-                              if (wyniki[k + 1].Count-1 < wyniki[k + 1].IndexOf(pozycja) + 1 || wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) + 1] == -3)
+                              if (k + 2 < ilosc)
                               {
-                                 pozycja = pozycja + wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) - 1]-1;
+                                 bool ok = false;
+                                  foreach (int wyn in wyniki[k + 2])
+                                      if (wyn > pozycja)
+                                      {
+                                          pozycja = wyn;
+                                          ok = true;
+                                          k++;
+                                          break;
+                                      }
+                                  if (ok == false) w = false;
+                                  break;
                               }
+
                               else
                               {
-                                  w = false;
+                                  pozycja = sekwencja.Length;
                                   break;
                               }
                           }
                           else
-                          if (wyniki[k + 1].Contains(pozycja))
-                              w = true;
-                          else
                           {
-                              w = false;
-                              break;
+                              pozycja++;
+                              if (wyniki[k + 1].Contains(-3) && wyniki[k + 1].Contains(pozycja))
+                              {
+
+                                  if (wyniki[k + 1].Count - 1 < wyniki[k + 1].IndexOf(pozycja) + 1 || wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) + 1] == -3)
+                                  {
+                                      pozycja = pozycja + wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) - 1] - 1;
+                                  }
+                                  else
+                                  {
+                                      w = false;
+                                      break;
+                                  }
+                              }
+                              else
+                                  if (wyniki[k + 1].Contains(pozycja))
+                                      w = true;
+                                  else
+                                  {
+                                      w = false;
+                                      break;
+                                  }
                           }
                           k++;
                           

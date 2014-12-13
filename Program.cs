@@ -86,12 +86,33 @@ namespace Bio_6
                   for(int j=0; j<wyniki[0].Count; j++)
                   {
                       w = true;
-                      int pozycja= wyniki[0].ElementAt(j);
-                      int k = 0;
+                      int pozycja = wyniki[0].ElementAt(j);
                       poczatek = pozycja;
+                      if (pozycja == -3)
+                      {
+                          pozycja = wyniki[0].ElementAt(j + 1) + wyniki[0].ElementAt(j + 2)-1;
+                          j=j+2;
+                          poczatek = wyniki[0].ElementAt(j);
+                      }
+                      int k = 0;
+                      
                       while (k+1 < ilosc)
                       {
                           pozycja++;
+                          if (wyniki[k + 1].Contains(-3) && wyniki[k + 1].Contains(pozycja))
+                          {
+                             
+                              if (wyniki[k + 1].Count-1 < wyniki[k + 1].IndexOf(pozycja) + 1 || wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) + 1] == -3)
+                              {
+                                 pozycja = pozycja + wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) - 1]-1;
+                              }
+                              else
+                              {
+                                  w = false;
+                                  break;
+                              }
+                          }
+                          else
                           if (wyniki[k + 1].Contains(pozycja))
                               w = true;
                           else

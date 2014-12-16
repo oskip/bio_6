@@ -211,7 +211,7 @@ namespace Bio_6
 
                   
 
-                  for (int j = 0; j < sekwencja.Length - k; j++)
+                  for (int j = 0; j <= sekwencja.Length - k; j++)
                   {
                       bool rowne = true;
                       for (int c = 0; c < k; c++)
@@ -253,11 +253,11 @@ namespace Bio_6
                   List<int> pozycja = new List<int>();
 
 
-                for(int l=min; l<=max; l++)
-                  for (int j = 0; j < sekwencja.Length; j++)
+                for(int k=min; k<=max; k++)
+                  for (int j = 0; j <= sekwencja.Length-k; j++)
                   {
                       bool rowne = true;
-                      for (int c = 0; c < l; c++)
+                      for (int c = 0; c < k; c++)
                       {
                           if (sekwencja[j + c] == w[0])
                               rowne = true;
@@ -271,7 +271,7 @@ namespace Bio_6
                       if (rowne == true)
                       {
                           pozycja.Add(-3);
-                          pozycja.Add(l);
+                          pozycja.Add(k);
                           pozycja.Add(j);
                       }
 

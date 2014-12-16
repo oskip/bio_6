@@ -47,7 +47,7 @@ namespace Bio_6
                           break;
                       case 'V': dowolnaLitera(i);
                           break;
-                      case 'x': dowolnyCiag(i);
+                      case 'x': dowolnyCiag(w, i);
                           break;
                       case '{':
                           string b = w.Substring(1, w.Length - 1); 
@@ -253,11 +253,11 @@ namespace Bio_6
                   List<int> pozycja = new List<int>();
 
 
-
-                  for (int j = 0; j < sekwencja.Length - min; j++)
+                for(int l=min; l<=max; l++)
+                  for (int j = 0; j < sekwencja.Length; j++)
                   {
                       bool rowne = true;
-                      for (int c = 0; c < min; c++)
+                      for (int c = 0; c < l; c++)
                       {
                           if (sekwencja[j + c] == w[0])
                               rowne = true;
@@ -270,31 +270,9 @@ namespace Bio_6
                       }
                       if (rowne == true)
                       {
-                          List<char> stringi = new List<char>();
-
-                          for(int l=0; l<max+1; l++)
-                          {
-                              stringi.Add(sekwencja[j+l]);
-                          }
-
-                          bool inne_niz_e=false;
-                          int k=0;
-                          for(int l=0; l<stringi.Count;l++)
-                          {
-                              if(stringi[l]!=w[0])
-                              {
-                                  inne_niz_e=true;
-                                  k=l;
-                                  break;
-                              }
-                          }
-
-                          if(inne_niz_e==true)
-                          {
                           pozycja.Add(-3);
-                          pozycja.Add(k);
+                          pozycja.Add(l);
                           pozycja.Add(j);
-                          }
                       }
 
 
@@ -338,13 +316,41 @@ namespace Bio_6
               wyniki.Add(i, pozycja);
           }
 
-          private static void dowolnyCiag(int i)
+          private static void dowolnyCiag(string w, int i)
           {
-              List<int> pozycja = new List<int>();
+              if (w.Length > 1)
+              {
+                  int min, max;
 
-              pozycja.Add(-1);
-              
-              wyniki.Add(i, pozycja);
+                  string a = w.Substring(2, w.Length - 3);
+                  string[] liczby = a.Split(',');
+
+                  int.TryParse(liczby[0], out min); //to jest i z x(i,j)
+                  int.TryParse(liczby[1], out max); //to jest j
+
+                  List<int> pozycja = new List<int>();
+
+                  for (int k = min; k <= max; k++)
+                  {
+                      for (int j = 0; j + k < sekwencja.Length;j++ )
+                      {
+                          pozycja.Add(-3);
+                          pozycja.Add(k);
+                          pozycja.Add(j);
+                      }
+                  }
+
+                  wyniki.Add(i, pozycja);
+              }
+              else
+              {
+                  List<int> pozycja = new List<int>();
+
+                  for (int j = 0; j < sekwencja.Length; j++)
+                      pozycja.Add(j);
+
+                  wyniki.Add(i, pozycja);
+              }
           }
 
           private static void dowolnaLitera(int i)

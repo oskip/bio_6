@@ -65,7 +65,6 @@ namespace Bio_6
                               break;
                           }
 
-                          
                   }
               }
 
@@ -88,106 +87,62 @@ namespace Bio_6
               int koniec;
               bool w=true;
               bool wypisane = false;
-                  for(int j=0; j<wyniki[0].Count; j++)
+              for (int j = 0; j < wyniki[0].Count; j++)
+              {
+                  w = true;
+                  int pozycja = wyniki[0].ElementAt(j);
+                  poczatek = pozycja;
+                  int k = 0;
+                  if (pozycja == -3)
                   {
-                      w = true;
-                      int pozycja = wyniki[0].ElementAt(j);
-                      poczatek = pozycja;
-                      int k = 0;
-                      if (pozycja == -3)
-                      {
-                          pozycja = wyniki[0].ElementAt(j + 1) + wyniki[0].ElementAt(j + 2)-1;
-                          j=j+2;
-                          poczatek = wyniki[0].ElementAt(j);
-                      }
-
-                      
-
-                      if (pozycja == -1) {
-                          pozycja = 0;
-                          poczatek = pozycja;
-                          if (k + 1 < ilosc)
-                          {
-                              foreach (int wyn in wyniki[k + 1])
-                                  if (wyn > pozycja)
-                                  {
-                                      pozycja = wyn - 1;
-                                      break;
-                                  }
-
-                          }
-                          else
-                              pozycja = sekwencja.Length;
-                          }
-                      
-                      while (k+1 < ilosc)
-                      {
-
-
-
-                          if (wyniki[k + 1].Contains(-1))
-                          {
-                              if (k + 2 < ilosc)
-                              {
-                                 bool ok = false;
-                                  foreach (int wyn in wyniki[k + 2])
-                                      if (wyn > pozycja+1) 
-                                      {
-                                          pozycja = wyn;
-                                          ok = true;
-                                          k++;
-                                          break;
-                                      }
-                                  if (ok == false) w = false;
-                                  break;
-                              }
-
-                              else
-                              {
-                                  pozycja = sekwencja.Length;
-                                  break;
-                              }
-                          }
-                          else
-                          {
-                              pozycja++;
-                              if (wyniki[k + 1].Contains(-3) && wyniki[k + 1].Contains(pozycja))
-                              {
-
-                                  if (wyniki[k + 1].Count - 1 < wyniki[k + 1].IndexOf(pozycja) + 1 || wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) + 1] == -3)
-                                  {
-                                      pozycja = pozycja + wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) - 1] - 1;
-                                  }
-                                  else
-                                  {
-                                      w = false;
-                                      break;
-                                  }
-                              }
-                              else
-                                  if (wyniki[k + 1].Contains(pozycja))
-                                      w = true;
-                                  else
-                                  {
-                                      w = false;
-                                      break;
-                                  }
-                          }
-                          k++;
-                          
-                      }
-                      koniec = pozycja;
-                      if (w == true)
-                      {
-                          Console.WriteLine(w);
-                          Console.WriteLine(poczatek);
-                          Console.WriteLine(koniec);
-                          wypisane=true;
-                      }
-                      
-                      
+                      pozycja = wyniki[0].ElementAt(j + 1) + wyniki[0].ElementAt(j + 2) - 1;
+                      j = j + 2;
+                      poczatek = wyniki[0].ElementAt(j);
                   }
 
+
+                  while (k + 1 < ilosc)
+                  {
+
+                      {                      
+                          pozycja++;
+                          if (wyniki[k + 1].Contains(-3) && wyniki[k + 1].Contains(pozycja))
+                          {
+
+                              if (wyniki[k + 1].Count - 1 < wyniki[k + 1].IndexOf(pozycja) + 1 || wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) + 1] == -3)
+                              {
+                                  pozycja = pozycja + wyniki[k + 1][wyniki[k + 1].IndexOf(pozycja) - 1] - 1;
+                              }
+                              else
+                              {
+                                  w = false;
+                                  break;
+                              }
+                          }
+                          else
+                              if (wyniki[k + 1].Contains(pozycja))
+                                  w = true;
+                              else
+                              {
+                                  w = false;
+                                  break;
+                              }
+                      }
+                      k++;
+                          
+                  }
+                  koniec = pozycja;
+                  if (w == true)
+                  {
+                      Console.WriteLine(w);
+                      Console.WriteLine(poczatek);
+                      Console.WriteLine(koniec);
+                      wypisane=true;
+                  }
+                  
+
+                  
+              }
                   if (wypisane == false) Console.WriteLine("Nie odnaleziono");
 
                   
@@ -318,7 +273,7 @@ namespace Bio_6
 
           private static void dowolnyCiag(string w, int i)
           {
-              if (w.Length > 1)
+              if (w.Contains(','))
               {
                   int min, max;
 
@@ -332,13 +287,40 @@ namespace Bio_6
 
                   for (int k = min; k <= max; k++)
                   {
-                      for (int j = 0; j + k < sekwencja.Length;j++ )
+                      for (int j = 0; j <= sekwencja.Length-k;j++ )
                       {
                           pozycja.Add(-3);
                           pozycja.Add(k);
                           pozycja.Add(j);
                       }
                   }
+
+                  wyniki.Add(i, pozycja);
+              }
+
+              else if(w.Length>1)
+              {
+                  int k;
+
+                  string a = w.Substring(2, w.Length - 3);
+
+                  int.TryParse(a, out k);
+                  
+                  List<int> pozycja = new List<int>();
+
+                  
+
+                  for (int j = 0; j <= sekwencja.Length - k; j++)
+                  {
+                      
+                          pozycja.Add(-3);
+                          pozycja.Add(k);
+                          pozycja.Add(j);
+                          
+                      
+
+
+                   }
 
                   wyniki.Add(i, pozycja);
               }
